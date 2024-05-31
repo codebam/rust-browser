@@ -15,6 +15,8 @@
           gobject-introspection
           graphene
           gtk4
+          atk
+          webkitgtk_4_1
         ];
       };
     }
