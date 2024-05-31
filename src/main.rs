@@ -1,28 +1,17 @@
-use gtk4 as gtk;
-use gtk::prelude::*;
-use gtk::{glib, Application, ApplicationWindow, Button};
+use glib::variant::ToVariant;
+use gtk::{prelude::*, Window, WindowType};
+use webkit2gtk::{WebView,WebViewExt};
 
-fn main() -> glib::ExitCode {
-    let application = Application::builder()
-        .application_id("com.example.FirstGtkApp")
-        .build();
+fn main() {
+    gtk::init().unwrap();
 
-    application.connect_activate(|app| {
-        let window = ApplicationWindow::builder()
-            .application(app)
-            .title("First GTK Program")
-            .default_width(350)
-            .default_height(70)
-            .build();
+    let window = Window::new(WindowType::Toplevel);
 
-        let button = Button::with_label("Click me!");
-        button.connect_clicked(|_| {
-            eprintln!("Clicked!");
-        });
-        window.set_child(Some(&button));
+    let webview = WebView::new();
+    webview.load_uri("http://example.com");
 
-        window.present();
-    });
+    window.add(&webview);
+    window.show_all();
 
-    application.run()
+    gtk::main();
 }
